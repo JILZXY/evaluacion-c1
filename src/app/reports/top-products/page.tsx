@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type TopProduct = {
   product_id: string;
@@ -31,17 +32,19 @@ export default function TopProductsPage() {
   }, [search]);
 
   return (
-    <div>
-      <h1>Ranking de Productos</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Ranking de Productos</h1>
 
       <input
         type="text"
         placeholder="Buscar producto..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className={styles.input}
       />
 
-      <table>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Producto</th>
@@ -62,7 +65,8 @@ export default function TopProductsPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

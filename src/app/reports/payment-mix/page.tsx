@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type PaymentMix = {
   method: string;
@@ -24,9 +25,10 @@ export default function PaymentMixPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Métodos de Pago</h1>
-      <table>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Métodos de Pago</h1>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Método</th>
@@ -43,7 +45,8 @@ export default function PaymentMixPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

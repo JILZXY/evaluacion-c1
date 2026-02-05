@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type InventoryRisk = {
   product_id: string;
@@ -30,17 +31,19 @@ export default function InventoryRiskPage() {
   }, [category]);
 
   return (
-    <div>
-      <h1>Reporte de Riesgo de Inventario</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Reporte de Riesgo de Inventario</h1>
 
       <input
         type="text"
         placeholder="Filtrar por categoría..."
         value={category}
         onChange={(e) => setCategory(e.target.value)}
+        className={styles.input}
       />
 
-      <table>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Producto</th>
@@ -59,7 +62,8 @@ export default function InventoryRiskPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

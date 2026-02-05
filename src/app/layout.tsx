@@ -24,27 +24,27 @@ export default function RootLayout({
               padding: "20px",
             }}
           >
-            <h2 style={{ marginTop: 0 }}>Dashboard</h2>
-            <nav style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Link href="/" style={{ color: "#fff", textDecoration: "none" }}>
+            <h2 style={{ marginTop: 0, paddingBottom: "10px", borderBottom: "1px solid #555" }}>Dashboard</h2>
+            <nav style={{ display: "flex", flexDirection: "column" }}>
+              <Link href="/" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Inicio
               </Link>
-              <Link href="/reports/sales-daily" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/sales-daily" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Ventas Diarias
               </Link>
-              <Link href="/reports/top-products" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/top-products" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Top Productos
               </Link>
-              <Link href="/reports/inventory-risk" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/inventory-risk" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Riesgo Inventario
               </Link>
-              <Link href="/reports/customer-value" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/customer-value" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Valor Clientes
               </Link>
-              <Link href="/reports/payment-mix" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/payment-mix" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Métodos de Pago
               </Link>
-              <Link href="/reports/orders-channel-mix" style={{ color: "#fff", textDecoration: "none" }}>
+              <Link href="/reports/orders-channel-mix" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Canales de Órdenes
               </Link>
             </nav>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type SalesDaily = {
   day: string;
@@ -25,9 +26,10 @@ export default function SalesDailyPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Reporte de Ventas Diarias</h1>
-      <table>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Reporte de Ventas Diarias</h1>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Día</th>
@@ -46,7 +48,8 @@ export default function SalesDailyPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

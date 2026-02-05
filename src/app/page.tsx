@@ -14,10 +14,10 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h2>Dashboard Principal</h2>
+      <h2 style={{ borderBottom: "2px solid #ccc", paddingBottom: "10px", marginBottom: "20px" }}>Dashboard Principal</h2>
       <p>Selecciona un reporte para visualizar métricas detalladas:</p>
 
-      <div>
+      <div className="dashboard-grid">
         {cards.map((card) => (
           <Link
             key={card.href}

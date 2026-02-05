@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type CustomerValue = {
   customer_id: string;
@@ -27,10 +28,11 @@ export default function CustomerValuePage() {
   }, [page]);
 
   return (
-    <div>
-      <h1>Valor de Clientes</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Valor de Clientes</h1>
 
-      <table>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Cliente</th>
@@ -49,16 +51,21 @@ export default function CustomerValuePage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
 
-      <div>
+      <div className={styles.pagination}>
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          className={styles.button}
+          disabled={page === 1}
         >
           Anterior
         </button>
+        <span style={{ margin: "0 10px" }}>Página {page}</span>
         <button
           onClick={() => setPage((p) => p + 1)}
+          className={styles.button}
         >
           Siguiente
         </button>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 type OrdersChannelMix = {
   channel: string;
@@ -24,10 +25,11 @@ export default function OrdersChannelMixPage() {
   }, []);
 
   return (
-    <div>
-      <h1>Distribución de Órdenes por Canal</h1>
-
-      <table>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Distribución de Órdenes por Canal</h1>
+  
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Canal</th>
@@ -44,7 +46,8 @@ export default function OrdersChannelMixPage() {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }
