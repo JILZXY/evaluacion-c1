@@ -1,1 +1,0 @@
-ALTER TABLE products ADD COLUMN created_at TIMESTAMP DEFAULT now();
