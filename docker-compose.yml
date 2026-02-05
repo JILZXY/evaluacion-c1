@@ -2,16 +2,33 @@ version: "3.9"
 
 services:
   db:
-    image: postgres:16
+    image: postgres:16-alpine
     container_name: cafe_db
     restart: always
-    env_file: .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: cafe_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./db/migrate.sql:/docker-entrypoint-initdb.d/02_migrate.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/03_seed.sql
+      - ./db/views.sql:/docker-entrypoint-initdb.d/04_views.sql
     ports:
       - "5432:5432"
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d
-      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: cafe_app
+    restart: always
+    environment:
+      DATABASE_URL: postgres://admin:admin123@db:5432/cafe_db
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  db_data:

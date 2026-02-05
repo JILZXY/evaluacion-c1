@@ -13,30 +13,36 @@ export default function SalesDailyPage() {
   const [data, setData] = useState<SalesDaily[]>([]);
 
   useEffect(() => {
-    fetch("/api/reports/sales-daily")
-      .then((res) => res.json())
-      .then((rows) => setData(rows));
+    fetch("/api/reports/sales-daily", {
+      headers: { "x-role": "user" },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
+      .then((rows) => setData(rows))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h1>Reporte de Ventas Diarias</h1>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+      <table>
         <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Día</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Total Ventas</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Tickets</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Ticket Promedio</th>
+          <tr>
+            <th>Día</th>
+            <th>Total Ventas</th>
+            <th>Tickets</th>
+            <th>Ticket Promedio</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row, i) => (
             <tr key={i}>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.day}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>${row.total_ventas.toFixed(2)}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.tickets}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>${row.ticket_promedio.toFixed(2)}</td>
+              <td>{row.day}</td>
+              <td>${Number(row.total_ventas).toFixed(2)}</td>
+              <td>{row.tickets}</td>
+              <td>${Number(row.ticket_promedio).toFixed(2)}</td>
             </tr>
           ))}
         </tbody>

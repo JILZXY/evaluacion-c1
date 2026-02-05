@@ -14,7 +14,7 @@ SELECT
   tickets,
   COALESCE(total_ventas / NULLIF(tickets,0),0) AS ticket_promedio
 FROM daily_sales
-HAVING SUM(total_ventas) > 0;
+WHERE total_ventas > 0;
 
 CREATE OR REPLACE VIEW vw_top_products_ranked AS
 SELECT

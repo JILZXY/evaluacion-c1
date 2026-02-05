@@ -17,30 +17,14 @@ export default function DashboardPage() {
       <h2>Dashboard Principal</h2>
       <p>Selecciona un reporte para visualizar métricas detalladas:</p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "20px",
-          marginTop: "20px",
-        }}
-      >
+      <div>
         {cards.map((card) => (
           <Link
             key={card.href}
             href={card.href}
-            style={{
-              display: "block",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "15px",
-              textDecoration: "none",
-              color: "#333",
-              backgroundColor: "#f9f9f9",
-              boxShadow: "2px 2px 5px rgba(0,0,0,0.1)",
-            }}
+            className="card"
           >
-            <h3 style={{ marginTop: 0 }}>{card.title}</h3>
+            <h3>{card.title}</h3>
             <p>{card.desc}</p>
           </Link>
         ))}

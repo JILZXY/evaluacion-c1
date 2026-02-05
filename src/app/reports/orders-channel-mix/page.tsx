@@ -12,29 +12,35 @@ export default function OrdersChannelMixPage() {
   const [data, setData] = useState<OrdersChannelMix[]>([]);
 
   useEffect(() => {
-    fetch("/api/reports/orders-channel-mix")
-      .then((res) => res.json())
-      .then((rows) => setData(rows));
+    fetch("/api/reports/orders-channel-mix", {
+      headers: { "x-role": "user" },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
+      .then((rows) => setData(rows))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h1>Distribución de Órdenes por Canal</h1>
 
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+      <table>
         <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Canal</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Órdenes</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>% del Total</th>
+          <tr>
+            <th>Canal</th>
+            <th>Órdenes</th>
+            <th>% del Total</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row, i) => (
             <tr key={i}>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.channel}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.total_orders}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.percent_of_total}%</td>
+              <td>{row.channel}</td>
+              <td>{row.total_orders}</td>
+              <td>{Number(row.percent_of_total).toFixed(2)}%</td>
             </tr>
           ))}
         </tbody>

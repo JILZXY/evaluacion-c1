@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body style={{ fontFamily: "Arial, sans-serif", margin: 0 }}>
+      <body style={{ fontFamily: "Arial, sans-serif", margin: 0, color: "black" }}>
         <div style={{ display: "flex", minHeight: "100vh" }}>
           {/* Sidebar */}
           <aside

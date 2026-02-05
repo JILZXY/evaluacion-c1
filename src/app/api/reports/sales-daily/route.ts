@@ -10,10 +10,19 @@ const querySchema = z.object({
 
 export async function GET(req: Request) {
   try {
+    const role = req.headers.get("x-role");
+    console.log("DEBUG AUTH:", {
+      receivedRole: role,
+      envAdmin: process.env.ROLE_ADMIN,
+      envUser: process.env.ROLE_USER,
+    });
+    if (role !== process.env.ROLE_ADMIN && role !== process.env.ROLE_USER) {
+       return NextResponse.json({ error: "Acceso no autorizado", details: { role, expected: [process.env.ROLE_ADMIN, process.env.ROLE_USER] } }, { status: 401 });
+    }
     const url = new URL(req.url);
     const params = querySchema.parse({
-      date_from: url.searchParams.get("date_from"),
-      date_to: url.searchParams.get("date_to"),
+      date_from: url.searchParams.get("date_from") || undefined,
+      date_to: url.searchParams.get("date_to") || undefined,
     });
 
     let query = `SELECT day, total_ventas, tickets, ticket_promedio 
@@ -35,6 +44,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(result.rows);
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    console.error("SERVER ERROR:", error);
+    return NextResponse.json({ error: error.message, details: error }, { status: 400 });
   }
 }

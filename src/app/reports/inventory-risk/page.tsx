@@ -18,13 +18,19 @@ export default function InventoryRiskPage() {
     const url = category
       ? `/api/reports/inventory-risk?category=${encodeURIComponent(category)}`
       : "/api/reports/inventory-risk";
-    fetch(url)
-      .then((res) => res.json())
-      .then((rows) => setData(rows));
+    fetch(url, {
+      headers: { "x-role": "user" },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        return res.json();
+      })
+      .then((rows) => setData(rows))
+      .catch((err) => console.error(err));
   }, [category]);
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h1>Reporte de Riesgo de Inventario</h1>
 
       <input
@@ -32,25 +38,24 @@ export default function InventoryRiskPage() {
         placeholder="Filtrar por categoría..."
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        style={{ marginBottom: "10px", padding: "5px", width: "250px" }}
       />
 
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+      <table>
         <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Producto</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Categoría</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Stock</th>
-            <th style={{ border: "1px solid #ccc", padding: "8px" }}>Riesgo (%)</th>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Riesgo (%)</th>
           </tr>
         </thead>
         <tbody>
           {data.map((row) => (
             <tr key={row.product_id}>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.product_name}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.category_name}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.stock}</td>
-              <td style={{ border: "1px solid #ccc", padding: "8px" }}>{row.risk_percent}%</td>
+              <td>{row.product_name}</td>
+              <td>{row.category_name}</td>
+              <td>{row.stock}</td>
+              <td>{Number(row.risk_percent).toFixed(2)}%</td>
             </tr>
           ))}
         </tbody>

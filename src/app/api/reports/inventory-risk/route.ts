@@ -9,6 +9,10 @@ const querySchema = z.object({
 
 export async function GET(req: Request) {
   try {
+    const role = req.headers.get("x-role");
+    if (role !== process.env.ROLE_ADMIN && role !== process.env.ROLE_USER) {
+       return NextResponse.json({ error: "Acceso no autorizado" }, { status: 401 });
+    }
     const url = new URL(req.url);
     const params = querySchema.parse({
       category: url.searchParams.get("category") || undefined,
