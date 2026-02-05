@@ -1,3 +1,9 @@
+CREATE TYPE order_channel AS ENUM ('in-store', 'online');
+CREATE TYPE order_status AS ENUM ('pending', 'completed', 'cancelled', 'refunded');
+CREATE TYPE payment_method AS ENUM ('cash', 'card', 'transfer', 'voucher');
+CREATE TYPE product_status AS ENUM ('active', 'inactive', 'discontinued');
+
+
 CREATE TABLE categories (
   id UUID PRIMARY KEY,
   name TEXT NOT NULL
@@ -9,7 +15,7 @@ CREATE TABLE products (
   category_id UUID REFERENCES categories(id),
   price NUMERIC(10,2) NOT NULL,
   stock INT NOT NULL,
-  active BOOLEAN DEFAULT true
+  status product_status DEFAULT 'active'
 );
 
 CREATE TABLE customers (
@@ -22,8 +28,8 @@ CREATE TABLE orders (
   id UUID PRIMARY KEY,
   customer_id UUID REFERENCES customers(id),
   created_at TIMESTAMP DEFAULT now(),
-  status TEXT,
-  channel TEXT
+  status order_status DEFAULT 'pending',
+  channel order_channel NOT NULL
 );
 
 CREATE TABLE order_items (
@@ -37,6 +43,6 @@ CREATE TABLE order_items (
 CREATE TABLE payments (
   id UUID PRIMARY KEY,
   order_id UUID REFERENCES orders(id),
-  method TEXT,
-  paid_amount NUMERIC(10,2)
+  method payment_method NOT NULL,
+  paid_amount NUMERIC(10,2) NOT NULL
 );
