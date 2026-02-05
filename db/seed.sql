@@ -1,59 +1,131 @@
--- =========================
--- Categorías
--- =========================
 INSERT INTO categories (id, name) VALUES
-(gen_random_uuid(), 'Bebidas'),
+(gen_random_uuid(), 'Café'),
+(gen_random_uuid(), 'Tés'),
+(gen_random_uuid(), 'Bebidas frías'),
 (gen_random_uuid(), 'Postres'),
 (gen_random_uuid(), 'Snacks'),
-(gen_random_uuid(), 'Café'),
-(gen_random_uuid(), 'Sandwiches');
+(gen_random_uuid(), 'Sandwiches'),
+(gen_random_uuid(), 'Wraps'),
+(gen_random_uuid(), 'Ensaladas'),
+(gen_random_uuid(), 'Jugos'),
+(gen_random_uuid(), 'Smoothies'),
+(gen_random_uuid(), 'Panadería'),
+(gen_random_uuid(), 'Helados'),
+(gen_random_uuid(), 'Desayunos'),
+(gen_random_uuid(), 'Comida rápida'),
+(gen_random_uuid(), 'Vegano'),
+(gen_random_uuid(), 'Sin gluten'),
+(gen_random_uuid(), 'Especialidades'),
+(gen_random_uuid(), 'Promociones'),
+(gen_random_uuid(), 'Temporada'),
+(gen_random_uuid(), 'Otros');
 
--- =========================
--- Productos
--- =========================
-INSERT INTO products (id, name, category_id, price, stock, active) VALUES
-(gen_random_uuid(), 'Latte', (SELECT id FROM categories WHERE name='Café'), 45.00, 50, true),
-(gen_random_uuid(), 'Capuccino', (SELECT id FROM categories WHERE name='Café'), 40.00, 30, true),
-(gen_random_uuid(), 'Brownie', (SELECT id FROM categories WHERE name='Postres'), 25.00, 20, true),
-(gen_random_uuid(), 'Galletas', (SELECT id FROM categories WHERE name='Snacks'), 15.00, 100, true),
-(gen_random_uuid(), 'Sandwich de Pollo', (SELECT id FROM categories WHERE name='Sandwiches'), 60.00, 10, true);
+INSERT INTO products (id, name, category_id, price, stock, status) VALUES
+(gen_random_uuid(), 'Latte', (SELECT id FROM categories WHERE name='Café'), 45.00, 50, 'active'),
+(gen_random_uuid(), 'Capuccino', (SELECT id FROM categories WHERE name='Café'), 40.00, 30, 'active'),
+(gen_random_uuid(), 'Espresso', (SELECT id FROM categories WHERE name='Café'), 30.00, 25, 'active'),
+(gen_random_uuid(), 'Té Verde', (SELECT id FROM categories WHERE name='Tés'), 35.00, 40, 'active'),
+(gen_random_uuid(), 'Té Negro', (SELECT id FROM categories WHERE name='Tés'), 35.00, 35, 'active'),
+(gen_random_uuid(), 'Frappé Vainilla', (SELECT id FROM categories WHERE name='Bebidas frías'), 55.00, 20, 'active'),
+(gen_random_uuid(), 'Brownie', (SELECT id FROM categories WHERE name='Postres'), 25.00, 15, 'active'),
+(gen_random_uuid(), 'Galletas', (SELECT id FROM categories WHERE name='Snacks'), 15.00, 100, 'active'),
+(gen_random_uuid(), 'Sandwich de Pollo', (SELECT id FROM categories WHERE name='Sandwiches'), 60.00, 10, 'active'),
+(gen_random_uuid(), 'Wrap Vegetariano', (SELECT id FROM categories WHERE name='Wraps'), 55.00, 12, 'active'),
+(gen_random_uuid(), 'Ensalada César', (SELECT id FROM categories WHERE name='Ensaladas'), 70.00, 8, 'active'),
+(gen_random_uuid(), 'Jugo de Naranja', (SELECT id FROM categories WHERE name='Jugos'), 30.00, 25, 'active'),
+(gen_random_uuid(), 'Smoothie Fresa', (SELECT id FROM categories WHERE name='Smoothies'), 50.00, 18, 'active'),
+(gen_random_uuid(), 'Croissant', (SELECT id FROM categories WHERE name='Panadería'), 20.00, 40, 'active'),
+(gen_random_uuid(), 'Helado Vainilla', (SELECT id FROM categories WHERE name='Helados'), 35.00, 30, 'active'),
+(gen_random_uuid(), 'Hotcakes', (SELECT id FROM categories WHERE name='Desayunos'), 45.00, 12, 'active'),
+(gen_random_uuid(), 'Hamburguesa', (SELECT id FROM categories WHERE name='Comida rápida'), 80.00, 15, 'active'),
+(gen_random_uuid(), 'Tarta Vegana', (SELECT id FROM categories WHERE name='Vegano'), 50.00, 10, 'active'),
+(gen_random_uuid(), 'Pan Sin Gluten', (SELECT id FROM categories WHERE name='Sin gluten'), 25.00, 20, 'active'),
+(gen_random_uuid(), 'Especialidad de Temporada', (SELECT id FROM categories WHERE name='Temporada'), 90.00, 5, 'active');
 
--- =========================
--- Clientes
--- =========================
 INSERT INTO customers (id, name, email) VALUES
 (gen_random_uuid(), 'Ana López', 'ana@example.com'),
 (gen_random_uuid(), 'Carlos Pérez', 'carlos@example.com'),
 (gen_random_uuid(), 'María García', 'maria@example.com'),
 (gen_random_uuid(), 'Luis Hernández', 'luis@example.com'),
-(gen_random_uuid(), 'Sofía Torres', 'sofia@example.com');
+(gen_random_uuid(), 'Sofía Torres', 'sofia@example.com'),
+(gen_random_uuid(), 'Pedro Ramírez', 'pedro@example.com'),
+(gen_random_uuid(), 'Laura Sánchez', 'laura@example.com'),
+(gen_random_uuid(), 'Jorge Díaz', 'jorge@example.com'),
+(gen_random_uuid(), 'Marta Jiménez', 'marta@example.com'),
+(gen_random_uuid(), 'Diego Cruz', 'diego@example.com'),
+(gen_random_uuid(), 'Lucía Romero', 'lucia@example.com'),
+(gen_random_uuid(), 'Andrés Vargas', 'andres@example.com'),
+(gen_random_uuid(), 'Paula Flores', 'paula@example.com'),
+(gen_random_uuid(), 'Fernando Castillo', 'fernando@example.com'),
+(gen_random_uuid(), 'Valeria Navarro', 'valeria@example.com'),
+(gen_random_uuid(), 'Ricardo Soto', 'ricardo@example.com'),
+(gen_random_uuid(), 'Gabriela León', 'gabriela@example.com'),
+(gen_random_uuid(), 'Héctor Morales', 'hector@example.com'),
+(gen_random_uuid(), 'Isabel Rivas', 'isabel@example.com'),
+(gen_random_uuid(), 'Esteban Méndez', 'esteban@example.com');
 
--- =========================
--- Órdenes
--- =========================
 INSERT INTO orders (id, customer_id, created_at, status, channel) VALUES
-(gen_random_uuid(), (SELECT id FROM customers WHERE name='Ana López'), NOW() - interval '5 days', 'completed', 'in-store'),
-(gen_random_uuid(), (SELECT id FROM customers WHERE name='Carlos Pérez'), NOW() - interval '4 days', 'completed', 'online'),
-(gen_random_uuid(), (SELECT id FROM customers WHERE name='María García'), NOW() - interval '3 days', 'completed', 'in-store'),
-(gen_random_uuid(), (SELECT id FROM customers WHERE name='Luis Hernández'), NOW() - interval '2 days', 'completed', 'online'),
-(gen_random_uuid(), (SELECT id FROM customers WHERE name='Sofía Torres'), NOW() - interval '1 days', 'completed', 'in-store');
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '20 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '19 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '18 days', 'pending', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '17 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '16 days', 'cancelled', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '15 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '14 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '13 days', 'pending', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '12 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '11 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '10 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '9 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '8 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '7 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '6 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '5 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '4 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '3 days', 'completed', 'online'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '2 days', 'completed', 'in-store'),
+(gen_random_uuid(), (SELECT id FROM customers ORDER BY random() LIMIT 1), NOW() - interval '1 days', 'completed', 'online');
 
--- =========================
--- Items de órdenes
--- =========================
 INSERT INTO order_items (id, order_id, product_id, qty, unit_price) VALUES
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC LIMIT 1), (SELECT id FROM products WHERE name='Latte'), 2, 45.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC LIMIT 1), (SELECT id FROM products WHERE name='Brownie'), 1, 25.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 1 LIMIT 1), (SELECT id FROM products WHERE name='Capuccino'), 1, 40.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 2 LIMIT 1), (SELECT id FROM products WHERE name='Sandwich de Pollo'), 2, 60.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 3 LIMIT 1), (SELECT id FROM products WHERE name='Galletas'), 3, 15.00);
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 45.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 40.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 3, 25.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 60.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 55.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 4, 15.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 30.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 35.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 50.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 3, 20.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 35.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 45.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 80.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 25.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 70.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 3, 35.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 90.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 50.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 1, 60.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), (SELECT id FROM products ORDER BY random() LIMIT 1), 2, 45.00);
 
--- =========================
--- Pagos
--- =========================
 INSERT INTO payments (id, order_id, method, paid_amount) VALUES
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC LIMIT 1), 'cash', 115.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 1 LIMIT 1), 'card', 40.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 2 LIMIT 1), 'cash', 120.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 3 LIMIT 1), 'transfer', 45.00),
-(gen_random_uuid(), (SELECT id FROM orders ORDER BY created_at ASC OFFSET 4 LIMIT 1), 'card', 60.00);
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 115.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 40.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 120.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'transfer', 45.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 60.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'voucher', 30.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 75.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 90.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'transfer', 150.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 200.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 55.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'voucher', 25.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 80.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'transfer', 100.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 65.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 95.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'voucher', 40.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'transfer', 110.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'card', 70.00),
+(gen_random_uuid(), (SELECT id FROM orders ORDER BY random() LIMIT 1), 'cash', 85.00);
