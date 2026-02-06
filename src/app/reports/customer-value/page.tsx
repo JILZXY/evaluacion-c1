@@ -14,16 +14,26 @@ type CustomerValue = {
 export default function CustomerValuePage() {
   const [data, setData] = useState<CustomerValue[]>([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    fetch(`/api/reports/customer-value?page=${page}&limit=10`, {
+    fetch(`/api/reports/customer-value?page=${page}&limit=4`, {
       headers: { "x-role": "user" },
     })
       .then((res) => {
         if (!res.ok) throw new Error("Unauthorized");
         return res.json();
       })
-      .then((rows) => setData(rows))
+      .then((response) => {
+        // Maneja la nueva estructura de respuesta { data, pagination }
+        // O la estructura antigua (array) por si acaso hay caché
+        if (Array.isArray(response)) {
+             setData(response);
+        } else {
+             setData(response.data);
+             setTotalPages(response.pagination.totalPages);
+        }
+      })
       .catch((err) => console.error(err));
   }, [page]);
 
@@ -42,14 +52,22 @@ export default function CustomerValuePage() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row) => (
-            <tr key={row.customer_id}>
-              <td>{row.customer_name}</td>
-              <td>{row.num_orders}</td>
-              <td>${Number(row.total_spent).toFixed(2)}</td>
-              <td>${Number(row.avg_spent).toFixed(2)}</td>
+          {data.length > 0 ? (
+            data.map((row) => (
+              <tr key={row.customer_id}>
+                <td>{row.customer_name}</td>
+                <td>{row.num_orders}</td>
+                <td>${Number(row.total_spent).toFixed(2)}</td>
+                <td>${Number(row.avg_spent).toFixed(2)}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4} style={{ textAlign: "center", padding: "20px" }}>
+                No hay datos en esta página.
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
         </table>
       </div>
@@ -62,10 +80,11 @@ export default function CustomerValuePage() {
         >
           Anterior
         </button>
-        <span style={{ margin: "0 10px" }}>Página {page}</span>
+        <span style={{ margin: "0 10px" }}>Página {page} de {totalPages}</span>
         <button
           onClick={() => setPage((p) => p + 1)}
           className={styles.button}
+          disabled={page >= totalPages}
         >
           Siguiente
         </button>

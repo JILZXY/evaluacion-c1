@@ -26,9 +26,21 @@ export async function GET(req: Request) {
                    ORDER BY total_spent DESC
                    LIMIT $1 OFFSET $2`;
 
+    const countQuery = `SELECT COUNT(*) FROM vw_customer_value`;
+    const countResult = await pool.query(countQuery);
+    const total = Number(countResult.rows[0].count);
+
     const result = await pool.query(query, [params.limit, offset]);
 
-    return NextResponse.json(result.rows);
+    return NextResponse.json({
+      data: result.rows,
+      pagination: {
+        page: params.page,
+        limit: params.limit,
+        total: total,
+        totalPages: Math.ceil(total / params.limit)
+      }
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
