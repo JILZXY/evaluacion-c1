@@ -2,9 +2,18 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { pool } from "@/../lib/db";
 
+// 🔒 WHITELIST: Solo estas categorías son válidas
+const ALLOWED_CATEGORIES = [
+  'Café', 'Tés', 'Bebidas frías', 'Postres', 'Snacks', 
+  'Sandwiches', 'Wraps', 'Ensaladas', 'Jugos', 'Smoothies', 
+  'Panadería', 'Helados', 'Desayunos', 'Comida rápida', 
+  'Vegano', 'Sin gluten', 'Especialidades', 'Promociones', 
+  'Temporada', 'Otros'
+] as const;
+
 // Validación de filtros
 const querySchema = z.object({
-  category: z.string().optional(),
+  category: z.enum(ALLOWED_CATEGORIES).optional(),
 });
 
 export async function GET(req: Request) {
