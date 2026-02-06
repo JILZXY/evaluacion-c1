@@ -32,7 +32,7 @@ export default function CustomerValuePage() {
         } else {
              setData(response.data);
              setTotalPages(response.pagination.totalPages);
-             setTotalRecords(response.pagination.totalRecords);
+             setTotalRecords(response.pagination.total);
         }
       })
       .catch((err) => console.error(err));
