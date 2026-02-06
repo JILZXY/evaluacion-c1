@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type InventoryRisk = {
   product_id: string;
@@ -33,6 +34,21 @@ export default function InventoryRiskPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Reporte de Riesgo de Inventario</h1>
+      
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Productos en Riesgo</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.filter(i => i.risk_percent > 0).length} / {data.length}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Stock Total Visible</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.reduce((acc, row) => acc + Number(row.stock), 0)}
+          </p>
+        </div>
+      </div>
 
       <input
         type="text"

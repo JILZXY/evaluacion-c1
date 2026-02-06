@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type CustomerValue = {
   customer_id: string;
@@ -15,6 +16,7 @@ export default function CustomerValuePage() {
   const [data, setData] = useState<CustomerValue[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
 
   useEffect(() => {
     fetch(`/api/reports/customer-value?page=${page}&limit=4`, {
@@ -25,13 +27,12 @@ export default function CustomerValuePage() {
         return res.json();
       })
       .then((response) => {
-        // Maneja la nueva estructura de respuesta { data, pagination }
-        // O la estructura antigua (array) por si acaso hay caché
         if (Array.isArray(response)) {
              setData(response);
         } else {
              setData(response.data);
              setTotalPages(response.pagination.totalPages);
+             setTotalRecords(response.pagination.totalRecords);
         }
       })
       .catch((err) => console.error(err));
@@ -40,6 +41,15 @@ export default function CustomerValuePage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Valor de Clientes</h1>
+
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Total Clientes con Compras</h3>
+          <p className={kpiStyles.kpiValue}>
+            {totalRecords}
+          </p>
+        </div>
+      </div>
 
       <div className={styles.tableContainer}>
         <table className={styles.table}>

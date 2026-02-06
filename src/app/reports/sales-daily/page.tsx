@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type SalesDaily = {
   day: string;
@@ -28,6 +29,30 @@ export default function SalesDailyPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Reporte de Ventas Diarias</h1>
+
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Ventas Totales</h3>
+          <p className={kpiStyles.kpiValue}>
+            ${data.reduce((acc, row) => acc + Number(row.total_ventas), 0).toFixed(2)}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Tickets Totales</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.reduce((acc, row) => acc + Number(row.tickets), 0)}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Ticket Promedio Global</h3>
+          <p className={kpiStyles.kpiValue}>
+            ${(
+              data.reduce((acc, row) => acc + Number(row.total_ventas), 0) / 
+              (data.reduce((acc, row) => acc + Number(row.tickets), 0) || 1)
+            ).toFixed(2)}
+          </p>
+        </div>
+      </div>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
         <thead>

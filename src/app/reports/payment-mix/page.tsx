@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type PaymentMix = {
   method: string;
@@ -27,6 +28,21 @@ export default function PaymentMixPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Métodos de Pago</h1>
+
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Método Favorito</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.length > 0 ? data.sort((a,b) => Number(b.percent_of_total) - Number(a.percent_of_total))[0].method : "-"}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Total Procesado</h3>
+          <p className={kpiStyles.kpiValue}>
+            ${data.reduce((acc, row) => acc + Number(row.total_amount), 0).toFixed(2)}
+          </p>
+        </div>
+      </div>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
         <thead>

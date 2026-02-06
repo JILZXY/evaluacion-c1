@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type TopProduct = {
   product_id: string;
@@ -34,6 +35,21 @@ export default function TopProductsPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Ranking de Productos</h1>
+
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Producto Estrella (Ingresos)</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.length > 0 ? data.sort((a,b) => a.rank_revenue - b.rank_revenue)[0].product_name : "-"}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Ingresos Visibles</h3>
+          <p className={kpiStyles.kpiValue}>
+            ${data.reduce((acc, row) => acc + Number(row.total_revenue), 0).toFixed(2)}
+          </p>
+        </div>
+      </div>
 
       <input
         type="text"

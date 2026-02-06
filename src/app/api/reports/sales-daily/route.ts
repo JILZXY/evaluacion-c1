@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { pool } from "@/../lib/db";
 
-// Validación de filtros
+const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
 const querySchema = z.object({
-  date_from: z.string().optional(),
-  date_to: z.string().optional(),
+  date_from: z.string().regex(DATE_REGEX, "Formato invalido (YYYY-MM-DD)").optional(),
+  date_to: z.string().regex(DATE_REGEX, "Formato invalido (YYYY-MM-DD)").optional(),
 });
 
 export async function GET(req: Request) {

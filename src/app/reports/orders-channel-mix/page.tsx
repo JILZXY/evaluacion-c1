@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
+import kpiStyles from "../kpi.module.css";
 
 type OrdersChannelMix = {
   channel: string;
@@ -27,6 +28,21 @@ export default function OrdersChannelMixPage() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Distribución de Órdenes por Canal</h1>
+
+      <div className={kpiStyles.kpiGrid}>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Canal Principal</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.length > 0 ? data.sort((a,b) => Number(b.percent_of_total) - Number(a.percent_of_total))[0].channel : "-"}
+          </p>
+        </div>
+        <div className={kpiStyles.kpiCard}>
+          <h3 className={kpiStyles.kpiTitle}>Total Órdenes</h3>
+          <p className={kpiStyles.kpiValue}>
+            {data.reduce((acc, row) => acc + Number(row.total_orders), 0)}
+          </p>
+        </div>
+      </div>
   
       <div className={styles.tableContainer}>
         <table className={styles.table}>
