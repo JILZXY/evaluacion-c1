@@ -15,7 +15,6 @@ export default function RootLayout({
     <html lang="es">
       <body style={{ fontFamily: "Arial, sans-serif", margin: 0, color: "black" }}>
         <div style={{ display: "flex", minHeight: "100vh" }}>
-          {/* Sidebar */}
           <aside
             style={{
               width: "220px",
@@ -39,7 +38,7 @@ export default function RootLayout({
                 Riesgo Inventario
               </Link>
               <Link href="/reports/customer-value" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
-                Valor Clientes
+                Valor de Clientes
               </Link>
               <Link href="/reports/payment-mix" style={{ color: "#fff", textDecoration: "none", padding: "10px 0", borderBottom: "1px solid #444" }}>
                 Métodos de Pago
@@ -49,8 +48,6 @@ export default function RootLayout({
               </Link>
             </nav>
           </aside>
-
-          {/* Contenido principal */}
           <main style={{ flex: 1, padding: "20px", backgroundColor: "#f9f9f9" }}>
             {children}
           </main>

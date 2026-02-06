@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Evaluacion C1 - Microservicios
 
-## Getting Started
+Este proyecto es una aplicación de análisis de datos de ventas, construida con Next.js y PostgreSQL.
 
-First, run the development server:
+## Instrucciones de Instalación y Ejecución
+
+Sigue estos pasos para levantar el entorno completo (Base de datos + Aplicación):
+
+### 1. Clonar el repositorio
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <url-del-repositorio>
+cd evaluacion
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configurar Variables de Entorno
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copia el archivo de ejemplo para crear tu archivo `.env`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env
+```
+*Si estás en Windows (PowerShell), usa:* `Copy-Item .env.example .env`
 
-## Learn More
+### 3. Levantar con Docker (Recomendado)
 
-To learn more about Next.js, take a look at the following resources:
+Ejecuta el siguiente comando para construir y levantar los contenedores:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker-compose up --build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Esto iniciará:
+*   Una base de datos PostgreSQL en el puerto `5432`.
+*   La aplicación web en `http://localhost:3000`.
 
-## Deploy on Vercel
+## Tecnologías
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   **Frontend/Backend**: Next.js 15
+*   **Base de Datos**: PostgreSQL 16
+*   **Contenedores**: Docker & Docker Compose
